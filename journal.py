@@ -13,14 +13,13 @@ def openEntry(entry): # - This accepts the date str and attempts to open the txt
         file = open(getFileName(entry)) #Open it
         line = file.read() #Write contents to string
         file.close() # Close file
-        phrase = line #Write to another string bc I can't code properly
         rate = getRate(getFileName(entry))
         # Fancy display
         print(41*"-")
         print(5*"-", "Journal Entry:",entry,5*'-')
         print(41*"-")
         print("Dear Diary,\n")
-        print(phrase)
+        print(line)
         print(2*'\n','-Dean',5*'\n') # My signature
         getRateDisplay(getFileName(entry))
         print("You have given this date a rating of: "+str(rate))
@@ -49,16 +48,16 @@ def writeNewFile(content,date,rate):#Creates new file
 def addToEntry(entry): #Adds a supplied text to an existing text document below the last entry
     file = open(getFileName(entry))
     line = file.read()
-    phrase = line
+    line = line
     file.close()
     
     addition = input("What else happened this day?")
-    phrase = phrase +'\n'+ addition
+    line = line +'\n'+ addition
     file = open(getFileName(entry), 'w')
-    file.write(phrase)
+    file.write(line)
     file.close()
     print("Entry for "+entry + " successfully updated!")
-    print(phrase)
+    print(line)
     
 def getRate(filename):
     ln = str(filename) #ln = '2021-10-20.3.txt'
