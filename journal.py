@@ -119,9 +119,8 @@ import textwrap
 from yaml.loader import SafeLoader
 def searchEntry(date):
 
-    #TEMP
-    date = 'entry.yml'
-    with open("entry.yml") as f:
+
+    with open("entries/entry.yml") as f:
         data = yaml.load(f, Loader=SafeLoader)
         rate = data['rate']
         date = data['date']
@@ -129,14 +128,17 @@ def searchEntry(date):
         sig = data['signature']
         desc = data['desc']
         
+        print(f"""{date} || {time} \n""")
+            
+
+        print('\n'.join(textwrap.wrap(desc,30)))
+
         print(f"""
-            This journal entry was created on {date} || {time} \n
-            {desc}\n
-            \n*3
+            \n
+            \n
             {sig},
             -Dean
-
-""")
+              """)
 
 searchEntry('asda')
 
