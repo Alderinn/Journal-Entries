@@ -21,14 +21,13 @@ def openEntry(data): # - Displays information from a dict
         time = data['time']
         sig = data['signature']
         desc = data['desc']
-        print(f"""{date} || {time} \n""")
-        print('\n'.join(textwrap.wrap(desc,30)))
-
-        print(f"""
-            {sig},
-            -Dean
-            rate = {rate}
-            """)
+        
+        os.system('clear')
+        print('='*30)
+        print(f"""    {date} || {time}""")
+        print('='*30)
+        print('\n'.join(textwrap.wrap(desc,30))+"\n")
+        print(f"""{sig},\n-Dean""")
 
 def modifyEntry(entry): #Replace a file's contents
     print("This will modify the text of: ", entry)
@@ -148,9 +147,9 @@ def searchEntry(date):
             return
     except:
          print(f'{date} was not found!!')
-         entryInfo()
+         entryInfo(date)
 
-def entryInfo():
+def entryInfo(datetoday):
     data = {
         'rate': 0,
         'desc':'',
@@ -164,8 +163,8 @@ def entryInfo():
 
     data['rate'] = str(input('Rate: '))
     data['desc'] = input('Description: ')
-    data['date'] = input('Date; YYYY-MM-DD: ')
-    data['sig'] = input('Signature: ')
+    data['date'] = str(datetoday)
+    data['signature'] = input('Signature: ')
 
     print('Creating...')
     writeNewFile(data)
@@ -183,7 +182,7 @@ def main(): #main function, hold;s menu
     #Displays menu
     print ("V1.1.2 Current path:\033[0;33;40m",path,'\033[0;37;40m')
     print (30 * '-')
-    print ("\033[0;37;40m    D A I L Y - D I A R Y")
+    print ("\033[0;37;40m    D A I L Y - J O U R N A L")
     print (30 * '-')
     print ("1. Today's Entry")
     print ("2. Entry Search by Date")
