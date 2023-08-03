@@ -29,7 +29,9 @@ def openEntry(data): # - Displays information from a dict
         print('\n'.join(textwrap.wrap(desc,30))+"\n")
         print(f"""{sig},\n-Dean""")
 
+
 def modifyEntry(entry): #Replace a file's contents
+    # TODO: Gotta update this
     print("This will modify the text of: ", entry)
     if os.path.exists(getFileName(entry)): # if file exists, delete it, and replace with new one
         os.remove(getFileName(entry)) #delete
@@ -47,6 +49,7 @@ def writeNewFile(data):#Creates new file
     openEntry(data)
 
 def addToEntry(entry): #Adds a supplied text to an existing text document below the last entry
+    # TODO: Needs to be updated
     file = open(getFileName(entry))
     line = file.read()
     line = line
@@ -59,17 +62,9 @@ def addToEntry(entry): #Adds a supplied text to an existing text document below 
     file.close()
     print("Entry for "+entry + " successfully updated!")
     print(line)
-    
-def getRate(filename):
-    ln = str(filename) #ln = '2021-10-20.3.txt'
-    rate = ln[11]
-    try:
-        rate = int(rate)
-        pass
-    except ValueError:
-        rate = "N/A"
-    return rate
+
 def getRateDisplay(filename):
+    # TODO: this can be updated
     ln = str(filename) #ln = NEW:'2021-10-20.3.txt' OLD:'2001-09-11.txt'
     rate = ln[11]
     try:
@@ -106,7 +101,7 @@ def dailyEntry(path): #Entry for the current date
 
         print(f'Mathing files:{filename} = = {todays_date}.yml . . .')
 
-        if filename.startswith(str(getFileName(todays_date))):#if it starts with todays_date
+        if filename.startswith(todays_date):#if it starts with todays_date
             print(f"{filename} was FOUND. Attempting to open...")
             searchEntry(todays_date) #display contents
             return
@@ -201,7 +196,7 @@ def main(): #main function, hold;s menu
         input("Press any key to continue...")
         os.system('cls')
         main()#back to menu
-            
+           
     elif choice == 2:
             os.system('cls')
             date = input("Enter the date to look for: (YYYY.MM.DD)... ")
