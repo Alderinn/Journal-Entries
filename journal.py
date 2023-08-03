@@ -25,8 +25,6 @@ def openEntry(data): # - Displays information from a dict
         print('\n'.join(textwrap.wrap(desc,30)))
 
         print(f"""
-            \n
-            \n
             {sig},
             -Dean
             rate = {rate}
