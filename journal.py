@@ -113,20 +113,34 @@ def dailyEntry(path): #Entry for the current date
         rate = input('What would you rate today? 1-5: ')
         writeNewFile(content,todays_date,rate)
         print("Entry for today successfully updated!")
-
+#%%
+import yaml
+import textwrap
+from yaml.loader import SafeLoader
 def searchEntry(date):
-    for filename in os.listdir():#for every file in the current path,
-        if filename.startswith(str(date)):#if it starts with todays_date
-            print("You have an entry for this day!")
-            openEntry(date) #display contents
-            return
-    else:
-        print("You have not made an entry today!")
-        content = input("How was your day today?: ")
-        rate = input('What would you rate today? 1-5: ')
-        writeNewFile(content,date,rate)
-        print("Entry for today successfully updated!")
-    
+
+    #TEMP
+    date = 'entry.yml'
+    with open("entry.yml") as f:
+        data = yaml.load(f, Loader=SafeLoader)
+        rate = data['rate']
+        date = data['date']
+        time = data['time']
+        sig = data['signature']
+        desc = data['desc']
+        
+        print(f"""
+            This journal entry was created on {date} || {time} \n
+            {desc}\n
+            \n*3
+            {sig},
+            -Dean
+
+""")
+
+searchEntry('asda')
+
+#%%
     
     
 def main(): #main function, hold;s menu
