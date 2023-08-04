@@ -21,13 +21,15 @@ def openEntry(data): # - Displays information from a dict
         time = data['time']
         sig = data['signature']
         desc = data['desc']
-        
         os.system('clear')
         print('='*30)
         print(f"""    {date} || {time}""")
         print('='*30)
         print('\n'.join(textwrap.wrap(desc,30))+"\n")
         print(f"""{sig},\n-Dean""")
+        modifyPrompt(data)
+def modifyPrompt(data):
+    pass
 
 
 def modifyEntry(entry): #Replace a file's contents
@@ -107,31 +109,8 @@ def dailyEntry(path): #Entry for the current date
             return
     else:    
         print("You have not made an entry today!")
-        content = input("How was your day today?: ")
-        rate = input('What would you rate today? 1-5: ')
-        writeNewFile(content,todays_date,rate)
+        entryInfo(todays_date)
         print("Entry for today successfully updated!")
-
-        ########
-        data = {
-        'rate': 0,
-        'desc':'',
-        'date': '', # YYYY-MM-DD
-        'signature': '',
-        'time': ''
-        }
-        
-        today = str(date.today())
-        rn = str(datetime.datetime.now())
-
-        data['rate'] = str(input('Rate: '))
-        data['desc'] = input('Description: ')
-        data['date'] = today
-        data['sig'] = input('Signature: ')
-
-        print('Creating...')
-        writeNewFile(data)
-
 
 def searchEntry(date):
     try:
