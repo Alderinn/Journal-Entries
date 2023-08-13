@@ -1,3 +1,6 @@
+# Daily Journal Entries v1.1.3
+My first real python project
+=======
 # Daily Journal Entries
 ![image](https://github.com/Alderinn/proj/assets/117390396/f2b435eb-dab9-40ca-bb1e-cc5ea8c7408c)
 

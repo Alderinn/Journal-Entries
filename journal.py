@@ -6,33 +6,34 @@ Created on Sun Oct  3 09:50:12 2021
 """
 import os
 import sys 
+import yaml
+import textwrap
+from yaml.loader import SafeLoader
+from datetime import date #imports date to allow for accurate updated year info
+from datetime import time 
+import datetime
 #import colorama
 #from colorama import Fore,Back,Style
 path = os.path.abspath(__file__)
-def openEntry(entry): # - This accepts the date str and attempts to open the txt file it would be under
-        file = open(getFileName(entry)) #Open it
-        line = file.read() #Write contents to string
-        file.close() # Close file
-        phrase = line #Write to another string bc I can't code properly
-        rate = getRate(getFileName(entry))
-        # Fancy display
-        print(41*"-")
-        print(5*"-", "Journal Entry:",entry,5*'-')
-        print(41*"-")
-        print("Dear Diary,\n")
-        print(phrase)
-        print(2*'\n','-Dean',5*'\n') # My signature
-        getRateDisplay(getFileName(entry))
-        print("You have given this date a rating of: "+str(rate))
-        
-        """
-    else: # if the file doesn't exist
-        content = input("What would you like to add for this day? ") # What do you want it to say
-        rate = input('How do you feel today? 1-5: ')
-        writeNewFile(content,entry,rate) #Sends info to have a file made
-        print("Entry for "+entry + " successfully updated!") # Success message
-            """
+def openEntry(data): # - Displays information from a dict
+        rate = data['rate']
+        date = data['date']
+        time = data['time']
+        sig = data['signature']
+        desc = data['desc']
+        os.system('clear')
+        print('='*30)
+        print(f"""    {date} || {time}""")
+        print('='*30)
+        print('\n'.join(textwrap.wrap(desc,30))+"\n")
+        print(f"""{sig},\n-Dean""")
+        modifyPrompt(data)
+def modifyPrompt(data):
+    pass
+
+
 def modifyEntry(entry): #Replace a file's contents
+    # TODO: Gotta update this
     print("This will modify the text of: ", entry)
     if os.path.exists(getFileName(entry)): # if file exists, delete it, and replace with new one
         os.remove(getFileName(entry)) #delete
@@ -41,35 +42,31 @@ def modifyEntry(entry): #Replace a file's contents
         writeNewFile(content,entry,rate)
         print("Entry for "+ entry + " successfully updated!")
 
-def writeNewFile(content,date,rate):#Creates new file
-    file = open(date+'.'+rate, 'w')
-    file.write(content)
-    file.close()
+def writeNewFile(data):#Creates new file
+
+    f = open(f"{data['date']}.yml", "w")
+    f.write(yaml.dump(data))
+    f.close()
+    print('File has been created!')
+    openEntry(data)
 
 def addToEntry(entry): #Adds a supplied text to an existing text document below the last entry
+    # TODO: Needs to be updated
     file = open(getFileName(entry))
     line = file.read()
-    phrase = line
+    line = line
     file.close()
     
     addition = input("What else happened this day?")
-    phrase = phrase +'\n'+ addition
+    line = line +'\n'+ addition
     file = open(getFileName(entry), 'w')
-    file.write(phrase)
+    file.write(line)
     file.close()
     print("Entry for "+entry + " successfully updated!")
-    print(phrase)
-    
-def getRate(filename):
-    ln = str(filename) #ln = '2021-10-20.3.txt'
-    rate = ln[11]
-    try:
-        rate = int(rate)
-        pass
-    except ValueError:
-        rate = "N/A"
-    return rate
+    print(line)
+
 def getRateDisplay(filename):
+    # TODO: this can be updated
     ln = str(filename) #ln = NEW:'2021-10-20.3.txt' OLD:'2001-09-11.txt'
     rate = ln[11]
     try:
@@ -100,35 +97,52 @@ def getFileName(date):
             return filename #Ex:2021-10-20.3.txt
 
 def dailyEntry(path): #Entry for the current date
-    from datetime import date #imports date to allow for accurate updated year info
     todays_date = str(date.today()) 
-    
+    print(f'listing every file: {os.listdir()}')
     for filename in os.listdir():#for every file in the current path,
-        if filename.startswith(str(getFileName(todays_date))):#if it starts with todays_date
-            #print("You have an entry for this day!") #Display Message
-            openEntry(todays_date) #display contents
+
+        print(f'Mathing files:{filename} = = {todays_date}.yml . . .')
+
+        if filename.startswith(todays_date):#if it starts with todays_date
+            print(f"{filename} was FOUND. Attempting to open...")
+            searchEntry(todays_date) #display contents
             return
-    else:        
+    else:    
         print("You have not made an entry today!")
-        content = input("How was your day today?: ")
-        rate = input('What would you rate today? 1-5: ')
-        writeNewFile(content,todays_date,rate)
+        entryInfo(todays_date)
         print("Entry for today successfully updated!")
 
 def searchEntry(date):
-    for filename in os.listdir():#for every file in the current path,
-        if filename.startswith(str(date)):#if it starts with todays_date
-            print("You have an entry for this day!")
-            openEntry(date) #display contents
+    try:
+        with open(f"{date}.yml") as f:
+            data = yaml.load(f, Loader=SafeLoader)
+            print('Found! Attempting to open...')
+            openEntry(data)
             return
-    else:
-        print("You have not made an entry today!")
-        content = input("How was your day today?: ")
-        rate = input('What would you rate today? 1-5: ')
-        writeNewFile(content,date,rate)
-        print("Entry for today successfully updated!")
+    except:
+         print(f'{date} was not found!!')
+         entryInfo(date)
+
+def entryInfo(datetoday):
+    data = {
+        'rate': 0,
+        'desc':'',
+        'date': '', # YYYY-MM-DD
+        'signature': '',
+        'time': ''
+    }
     
-    
+    today = str(date.today())
+    rn = str(datetime.datetime.now())
+
+    data['rate'] = str(input('Rate: '))
+    data['desc'] = input('Description: ')
+    data['date'] = str(datetoday)
+    data['signature'] = input('Signature: ')
+
+    print('Creating...')
+    writeNewFile(data)
+  
     
 def main(): #main function, hold;s menu
 
@@ -142,7 +156,7 @@ def main(): #main function, hold;s menu
     #Displays menu
     print ("V1.1.2 Current path:\033[0;33;40m",path,'\033[0;37;40m')
     print (30 * '-')
-    print ("\033[0;37;40m    D A I L Y - D I A R Y")
+    print ("\033[0;37;40m    D A I L Y - J O U R N A L")
     print (30 * '-')
     print ("1. Today's Entry")
     print ("2. Entry Search by Date")
@@ -161,11 +175,14 @@ def main(): #main function, hold;s menu
         input("Press any key to continue...")
         os.system('cls')
         main()#back to menu
-            
+           
     elif choice == 2:
             os.system('cls')
-            date = input("Enter the date to look for: (YYYY-MM-DD)... ")
+            date = input("Enter the date to look for: (YYYY.MM.DD)... ")
             searchEntry(date) # Successful
+
+
+            """
             overwrite = input('What would you like to modify? (ov/add/r/close)').lower()
             if overwrite == 'ov':#if the user wants to overwrite the data
                 modifyEntry(date)
@@ -177,7 +194,7 @@ def main(): #main function, hold;s menu
                print("File successfuly updated rate!")
             else:
                 print('File unchanged.')
-            
+            """
             
             
             input("Press any key to continue...")
@@ -188,8 +205,8 @@ def main(): #main function, hold;s menu
             rootdir = os.getcwd() #uses os.walk to "walk" from the root directory to the entries folder
             for subdir, dirs, files in os.walk(rootdir):
                 for file in files:
-                    if file.endswith(".txt"): #displays every file with the .txt extension
-                        print (file)
+                    if file.endswith(".yml"): 
+                        print (file[:-4])
             input("Press any key to continue...")
             main()
     elif choice == 4:
@@ -199,4 +216,3 @@ def main(): #main function, hold;s menu
             main()
 
 main()
-#%%
