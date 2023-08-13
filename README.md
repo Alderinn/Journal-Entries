@@ -1,4 +1,6 @@
 # Daily Journal Entries
+![image](https://github.com/Alderinn/proj/assets/117390396/f2b435eb-dab9-40ca-bb1e-cc5ea8c7408c)
+
 This project was created to just get my first taste maintaining a project, using VScode, and learning git, understanding branches, venv, etc. 
 All this program can do currenltiy is:
 - Create/View Today's Journal entries
