@@ -15,19 +15,6 @@ import datetime
 #import colorama
 #from colorama import Fore,Back,Style
 path = os.path.abspath(__file__)
-def openEntry(data): # - Displays information from a dict
-        rate = data['rate']
-        date = data['date']
-        time = data['time']
-        sig = data['signature']
-        desc = data['desc']
-        os.system('clear')
-        print('='*30)
-        print(f"""    {date} || {time}""")
-        print('='*30)
-        print('\n'.join(textwrap.wrap(desc,30))+"\n")
-        print(f"""{sig},\n-Dean""")
-        modifyPrompt(data)
 def modifyPrompt(data):
     pass
 
@@ -115,10 +102,11 @@ def searchEntry(date):
         with open(f"{date}.yml") as f:
             data = yaml.load(f, Loader=SafeLoader)
             print('Found! Attempting to open...')
-            openEntry(data)
+            #openEntry(data)
             return
     except:
          print(f'{date} was not found!!')
+         pass
          entryInfo(date)
 
 
