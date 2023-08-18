@@ -43,11 +43,12 @@ def modifyEntry(entry): #Replace a file's contents
         print("Entry for "+ entry + " successfully updated!")
 
 def writeNewFile(data):#Creates new file
-    f = open(f"{data['date']}.yml", "w")
+    f = open(f"entries/{data['date']}.yml", "w")
     f.write(yaml.dump(data))
     f.close()
     print('File has been created!')
-    openEntry(data)
+    #openEntry(data)
+    return
 
 def addToEntry(entry): #Adds a supplied text to an existing text document below the last entry
     # TODO: Needs to be updated
@@ -130,6 +131,7 @@ def entryInfo(datetoday,data):
     writeNewFile(data)
 
 def main(): #main function, hold;s menu
+    
     pass
 """
      #Records the current file path
