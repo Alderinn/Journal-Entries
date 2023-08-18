@@ -43,7 +43,6 @@ def modifyEntry(entry): #Replace a file's contents
         print("Entry for "+ entry + " successfully updated!")
 
 def writeNewFile(data):#Creates new file
-
     f = open(f"{data['date']}.yml", "w")
     f.write(yaml.dump(data))
     f.close()
@@ -100,9 +99,7 @@ def dailyEntry(path): #Entry for the current date
     todays_date = str(date.today()) 
     print(f'listing every file: {os.listdir()}')
     for filename in os.listdir():#for every file in the current path,
-
-        print(f'Mathing files:{filename} = = {todays_date}.yml . . .')
-
+        print(f'Matching files:{filename} = = {todays_date}.yml . . .')
         if filename.startswith(todays_date):#if it starts with todays_date
             print(f"{filename} was FOUND. Attempting to open...")
             searchEntry(todays_date) #display contents
@@ -123,29 +120,18 @@ def searchEntry(date):
          print(f'{date} was not found!!')
          entryInfo(date)
 
-def entryInfo(datetoday):
-    data = {
-        'rate': 0,
-        'desc':'',
-        'date': '', # YYYY-MM-DD
-        'signature': '',
-        'time': ''
-    }
-    
-    today = str(date.today())
+def entryInfo(datetoday,data):
     rn = str(datetime.datetime.now())
-
     data['rate'] = str(input('Rate: '))
     data['desc'] = input('Description: ')
     data['date'] = str(datetoday)
     data['signature'] = input('Signature: ')
-
     print('Creating...')
     writeNewFile(data)
-  
-    
-def main(): #main function, hold;s menu
 
+def main(): #main function, hold;s menu
+    pass
+"""
      #Records the current file path
     os.system('cls')
     
@@ -182,7 +168,7 @@ def main(): #main function, hold;s menu
             searchEntry(date) # Successful
 
 
-            """
+            
             overwrite = input('What would you like to modify? (ov/add/r/close)').lower()
             if overwrite == 'ov':#if the user wants to overwrite the data
                 modifyEntry(date)
@@ -194,7 +180,7 @@ def main(): #main function, hold;s menu
                print("File successfuly updated rate!")
             else:
                 print('File unchanged.')
-            """
+            
             
             
             input("Press any key to continue...")
@@ -215,4 +201,5 @@ def main(): #main function, hold;s menu
             print ("Invalid number. Try again...")
             main()
 
+"""
 main()
