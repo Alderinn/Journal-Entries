@@ -9,7 +9,8 @@ from journal import writeNewFile
 from tkcalendar import Calendar
 from tkinter import ttk
 
-class CalendarW(ctk.CTkCanvas):
+
+class CalendarW(ctk.CTkCanvas): #TODO: -Not functioning
     def show():
         ctk.set_appearance_mode("Dark")
         ctk.set_default_color_theme("green")
@@ -42,14 +43,14 @@ class MyFrame(ctk.CTkFrame):
         self.label.grid(row=0, column=0, padx=20, pady=(40,0), columnspan=2)
         
         # Today's Entry
-        self.button = ctk.CTkButton(self, text="Today's Entry", command=self.WipePage, width=160, height=40, fg_color='#0083aa')
+        self.button = ctk.CTkButton(self, text="Make an Entry 📝", command=self.WipePage, width=220, height=40, fg_color='#0083aa',font=('',28))
         self.button.grid(row=1, column=0, padx=20, pady=(50,0), columnspan=2)
         # Entry Search
-        self.button = ctk.CTkButton(self, text="Entry Search", command=self.WipePage, width=160, height=40, fg_color='#004155')
+        self.button = ctk.CTkButton(self, text="Entry Search 🔍", command=self.WipePage, width=220, height=40, fg_color='#004155',font=('',28))
         self.button.grid(row=2, column=0, padx=20, pady=5, columnspan=2)
         # All Entries
-        self.button = ctk.CTkButton(self, text="List ALL", command=quit, width=160, height=40, fg_color='#004155')
-        self.button.grid(row=3, column=0, padx=20, pady=5, columnspan=2)
+        self.button = ctk.CTkButton(self, text="List ALL", command=quit, width=220, height=40, fg_color='#004155',font=('',28))
+        self.button.grid(row=3, column=0, padx=20, pady=0, columnspan=2)
         # EXIT
         self.button = ctk.CTkButton(self, text="EXIT", command=quit, width=80, height=20, fg_color='red')
         self.button.grid(row=4, column=0, padx=20, pady=(15,100), columnspan=2)

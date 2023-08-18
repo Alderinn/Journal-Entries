@@ -121,14 +121,7 @@ def searchEntry(date):
          print(f'{date} was not found!!')
          entryInfo(date)
 
-def entryInfo(datetoday,data):
-    rn = str(datetime.datetime.now())
-    data['rate'] = str(input('Rate: '))
-    data['desc'] = input('Description: ')
-    data['date'] = str(datetoday)
-    data['signature'] = input('Signature: ')
-    print('Creating...')
-    writeNewFile(data)
+
 
 def main(): #main function, hold;s menu
     
