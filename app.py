@@ -29,6 +29,16 @@ class CalendarW(ctk.CTkCanvas): #TODO: -Not functioning
                     selectbackground=ctk.ThemeManager.theme["CTkButton"]["fg_color"][1])
         cal.pack(fill="both", expand=True, padx=10, pady=10)
         print(cal)
+class EntryResults(ctk.CTkScrollableFrame):
+    def __init__(self, master, **kwargs):
+        super().__init__(master, **kwargs)
+        #TODO: Stopped here
+        entries = ["Entry1","Entry2","Entry3"]
+        r=0
+        for e in entries:
+            self.label=ctk.CTkLabel(self,text=e)
+            self.label.grid(row=[r],column=1,)
+            r = r+1
 
 class MyFrame(ctk.CTkFrame):
     def __init__(self, master):
@@ -43,10 +53,10 @@ class MyFrame(ctk.CTkFrame):
         self.label.grid(row=0, column=0, padx=20, pady=(40,0), columnspan=2)
         
         # Today's Entry
-        self.button = ctk.CTkButton(self, text="Make an Entry 📝", command=self.WipePage, width=220, height=40, fg_color='#0083aa',font=('',28))
+        self.button = ctk.CTkButton(self, text="Make an Entry 📝", command=self.WipeOpenEntry, width=220, height=40, fg_color='#0083aa',font=('',28))
         self.button.grid(row=1, column=0, padx=20, pady=(50,0), columnspan=2, ipadx=10,ipady=5)
         # Entry Search
-        self.button = ctk.CTkButton(self, text="Entry Search 🔍", command=self.WipePage, width=220, height=40, fg_color='#004155',font=('',28))
+        self.button = ctk.CTkButton(self, text="Entry Search 🔍", command=self.ShowPage, width=220, height=40, fg_color='#004155',font=('',28))
         self.button.grid(row=2, column=0, padx=20, pady=5, columnspan=2, ipadx=10,ipady=5)
         # All Entries
         self.button = ctk.CTkButton(self, text="List ALL", command=quit, width=220, height=40, fg_color='#004155',font=('',28))
@@ -55,20 +65,32 @@ class MyFrame(ctk.CTkFrame):
         self.button = ctk.CTkButton(self, text="EXIT", command=quit, width=80, height=20, fg_color='red')
         self.button.grid(row=4, column=0, padx=20, pady=(15,100), columnspan=2)
 
-        # CALENDAR  
-
-
-
-
-
-
-
-    def WipePage(self):
+    # - Wipe the frame, then populate with new content
+    def WipeOpenEntry(self):
         print("button pressed")
         for widget in MyFrame.winfo_children(self):
             widget.destroy()
         self.EntryPage()
+    def WipeSearch(self):
+        print("button pressed")
+        for widget in MyFrame.winfo_children(self):
+            widget.destroy()
+        self.SearchPage()
 
+
+
+    # Search page
+    def SearchPage(self):
+        self.grid_columnconfigure((0,1), weight=1)
+        # TITLE: How was your day?
+        self.title = ctk.CTkLabel(master=self,text='Search',font=("",36))
+        self.title.grid(row=0,column=0,sticky='w',padx=(10,0),pady=(5,0))
+        
+
+    def ShowPage(self):
+        self.my_frame = EntryResults(master=self)
+        self.my_frame.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
+    # Entry Page
     def EntryPage(self):
         self.grid_columnconfigure((0,1), weight=1)
 
